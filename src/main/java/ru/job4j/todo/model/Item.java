@@ -1,15 +1,15 @@
 package ru.job4j.todo.model;
 
-//import javax.persistence.*;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.Objects;
 
-//@Entity
+@Entity
 public class Item {
 
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String description;
     private LocalDateTime created = LocalDateTime.now().truncatedTo(ChronoUnit.MICROS);
