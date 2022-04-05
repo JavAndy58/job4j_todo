@@ -6,6 +6,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.Objects;
 
 @Entity
+@Table(name = "items")
 public class Item {
 
     @Id
