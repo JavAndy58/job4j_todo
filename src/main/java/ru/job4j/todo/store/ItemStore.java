@@ -4,8 +4,6 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Repository;
 import ru.job4j.todo.model.Item;
-
-import javax.persistence.EntityManager;
 import java.util.List;
 
 @Repository
