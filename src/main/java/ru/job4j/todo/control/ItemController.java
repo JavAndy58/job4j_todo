@@ -3,6 +3,9 @@ package ru.job4j.todo.control;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import ru.job4j.todo.model.Item;
 import ru.job4j.todo.service.ItemService;
 
 @Controller
@@ -14,10 +17,21 @@ public class ItemController {
         this.itemService = itemService;
     }
 
-    @GetMapping("/index")
-    public String itemss(Model model) {
+    @GetMapping("/items")
+    public String items(Model model) {
         model.addAttribute("items", itemService.findAll());
-        return "index";
+        return "items";
+    }
+
+    @GetMapping("/formAddItem")
+    public String formAddPost(Model model) {
+        return "addItem";
+    }
+
+    @PostMapping("/createItem")
+    public String createPost(@ModelAttribute Item item) {
+        itemService.create(item);
+        return "redirect:/items";
     }
 
 }
