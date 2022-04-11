@@ -15,7 +15,7 @@ public class ItemController {
     }
 
     @GetMapping("/index")
-    public String items(Model model) {
+    public String itemss(Model model) {
         model.addAttribute("items", itemService.findAll());
         return "index";
     }
