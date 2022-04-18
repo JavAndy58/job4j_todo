@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import ru.job4j.todo.model.Item;
 import ru.job4j.todo.service.ItemService;
+import java.time.LocalDateTime;
 
 @Controller
 public class ItemController {
@@ -23,8 +24,9 @@ public class ItemController {
         return "items";
     }
 
-    @GetMapping("/formAddItem")
+    @GetMapping("/addItem")
     public String formAddPost(Model model) {
+        model.addAttribute("item", new Item(0, "Заполните поле", LocalDateTime.now(), false));
         return "addItem";
     }
 
