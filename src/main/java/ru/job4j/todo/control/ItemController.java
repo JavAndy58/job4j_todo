@@ -26,7 +26,8 @@ public class ItemController {
 
     @GetMapping("/addItem")
     public String formAddPost(Model model) {
-        model.addAttribute("item", new Item(0, "Заполните поле", LocalDateTime.now(), false));
+//        model.addAttribute("item", new Item(0, "Заполните поле", LocalDateTime.now(), false));
+        model.addAttribute("item", new Item(0, "Заполните поле", false));
         return "addItem";
     }
 
@@ -34,6 +35,24 @@ public class ItemController {
     public String createPost(@ModelAttribute Item item) {
         itemService.create(item);
         return "redirect:/items";
+    }
+
+
+
+
+    @GetMapping("/hello")
+    public String helloPage() {
+        return "first/hello";
+    }
+
+    @GetMapping("/goodbye")
+    public String goodByePage() {
+        return "first/goodbye";
+    }
+
+    @GetMapping("/exit")
+    public String exit() {
+        return "second/exit";
     }
 
 }
