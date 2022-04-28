@@ -29,8 +29,12 @@
             <div class="card-body">
                 <form th:action="@{/createItem}" method="POST">
                     <div class="form-group">
-                        <label for="name">Имя</label>
-                        <input type="text" class="form-control" id="name" description="name">
+                        <label for="description">Описание задачи</label>
+                        <input type="text" class="form-control" id="description">
+                    </div>
+                    <div class="form-check">
+                        <input type="checkbox" name="done" class="form-check-input" id="done">
+                        <label class="form-check-label" for="done">Исполнено</label>
                     </div>
                     <button type="submit" class="btn btn-primary">Сохранить</button>
                 </form>

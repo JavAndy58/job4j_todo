@@ -1,5 +1,5 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -24,15 +24,15 @@
             <thead>
             <tr>
                 <th scope="col">Имя</th>
-                <th scope="col">Дата создания</th>
+
                 <th scope="col">Состояние</th>
             </tr>
             </thead>
             <tbody>
             <tr th:each="item: ${items}">
-                <td th:text="${item.description}" />
+                <td th:text="${item.description}"/>
 
-                <td th:text="${item.done}" />
+                <td th:text="${item.done}"/>
             </tr>
             </tbody>
         </table>

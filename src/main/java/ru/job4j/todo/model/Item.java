@@ -48,4 +48,17 @@ public class Item {
     public void setDone(boolean done) {
         this.done = done;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Item item = (Item) o;
+        return id == item.id && done == item.done && Objects.equals(description, item.description);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, description, done);
+    }
 }
