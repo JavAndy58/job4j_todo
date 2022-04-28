@@ -23,11 +23,4 @@ public class ItemService {
         store.create(item);
     }
 
-//    public void update(Item item) {
-//        store.update(item);
-//    }
-//
-//    public Item findById(int id) {
-//        return store.findById(id);
-//    }
 }
