@@ -23,7 +23,7 @@ public class ItemController {
         return "items";
     }
 
-    @GetMapping("/formAddItem")
+    @GetMapping("/addItem")
     public String formAddPost(Model model) {
         return "addItem";
     }
