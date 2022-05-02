@@ -26,7 +26,7 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
-                <a class="nav-item nav-link active" href="#">Главная <span class="sr-only">(current)</span></a>
+
                 <a class="nav-item nav-link" th:href="@{/addItem}">Добавить задание</a>
                 <a class="nav-item nav-link" th:href="@{/items}">Все</a>
                 <a class="nav-item nav-link" th:href="@{/itemsCompleted}">Выполненные</a>
@@ -34,6 +34,29 @@
             </div>
         </div>
     </nav>
+
+    <div class="row">
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">Наименование задачи</th>
+                <th scope="col">Описание задачи</th>
+                <th scope="col">Дата создания</th>
+                <th scope="col">Состояние</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="item: ${items}">
+                <td th:text="${item.name}" />
+                <td th:text="${item.description}" />
+                <td th:text="${item.created}" />
+                <td th:text="${item.done}" />
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+
 </div>
 </body>
 </html>

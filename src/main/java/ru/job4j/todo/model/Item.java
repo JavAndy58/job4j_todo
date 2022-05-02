@@ -4,6 +4,7 @@ import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.Date;
 import java.util.Objects;
 
 @Entity
@@ -13,16 +14,14 @@ public class Item {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    private String name;
     private String description;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date created;
     private boolean done;
 
     public Item() {
-    }
-
-    public Item(int id, String description, boolean done) {
-        this.id = id;
-        this.description = description;
-        this.done = done;
     }
 
     public int getId() {
@@ -33,12 +32,28 @@ public class Item {
         this.id = id;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public String getDescription() {
         return description;
     }
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Date getCreated() {
+        return created;
+    }
+
+    public void setCreated(Date created) {
+        this.created = created;
     }
 
     public boolean isDone() {
@@ -54,11 +69,11 @@ public class Item {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Item item = (Item) o;
-        return id == item.id && done == item.done && Objects.equals(description, item.description);
+        return id == item.id && done == item.done && Objects.equals(name, item.name) && Objects.equals(description, item.description) && Objects.equals(created, item.created);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, description, done);
+        return Objects.hash(id, name, description, created, done);
     }
 }
