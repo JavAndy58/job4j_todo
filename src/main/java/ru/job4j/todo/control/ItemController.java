@@ -4,6 +4,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import ru.job4j.todo.model.Item;
 import ru.job4j.todo.service.ItemService;
@@ -31,6 +32,18 @@ public class ItemController {
         return "items";
     }
 
+    @GetMapping("/itemsCompleted")
+    public String itemsCompleted(Model model) {
+        model.addAttribute("itemsCompleted", itemService.findCompleted());
+        return "itemsCompleted";
+    }
+
+    @GetMapping("itemsNew")
+    public String itemsNew(Model model) {
+        model.addAttribute("itemsNew", itemService.findNew());
+        return "itemsNew";
+    }
+
     @GetMapping("/addItem")
     public String formAddPost(Model model) {
         model.addAttribute("item", new Item());
@@ -42,6 +55,19 @@ public class ItemController {
         item.setCreated(new Date(System.currentTimeMillis()));
         itemService.create(item);
         return "redirect:/items";
+    }
+
+    @PostMapping("/updateItem")
+    public String updateItem(@ModelAttribute Item item) {
+        item.setCreated(new Date(System.currentTimeMillis()));
+        itemService.update(item);
+        return "redirect:/items";
+    }
+
+    @GetMapping("/formUpdateItem/{itemId}")
+    public String formUpdateItem(Model model, @PathVariable("itemId") int id) {
+        model.addAttribute("item", itemService.findById(id));
+        return "updateItem";
     }
 
 

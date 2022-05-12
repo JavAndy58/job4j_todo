@@ -40,23 +40,26 @@
             <thead>
             <tr>
                 <th scope="col">Наименование задачи</th>
-                <th scope="col">Описание задачи</th>
+
                 <th scope="col">Дата создания</th>
                 <th scope="col">Состояние</th>
             </tr>
             </thead>
             <tbody>
             <tr th:each="item: ${items}">
-                <td th:text="${item.name}" />
-                <td th:text="${item.description}" />
+                <td>
+                    <a th:href="@{|/formUpdateItem/${item.id}|}">
+                        <i class="fa fa-edit"></i>
+                    </a>
+                    <span th:text="${item.name}"></span>
+                </td>
+
                 <td th:text="${item.created}" />
                 <td th:text="${item.done}" />
             </tr>
             </tbody>
         </table>
     </div>
-
-
 </div>
 </body>
 </html>

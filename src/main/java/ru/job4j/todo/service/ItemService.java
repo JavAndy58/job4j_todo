@@ -19,8 +19,24 @@ public class ItemService {
         return store.findAll();
     }
 
+    public Collection<Item> findCompleted() {
+        return store.findCompleted();
+    }
+
+    public Collection<Item> findNew() {
+        return store.findNew();
+    }
+
     public void create(Item item) {
         store.create(item);
+    }
+
+    public void update(Item item) {
+        store.update(item);
+    }
+
+    public Item findById(int id) {
+        return store.findById(id);
     }
 
 }
