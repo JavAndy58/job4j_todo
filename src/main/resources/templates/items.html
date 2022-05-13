@@ -28,7 +28,7 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
-
+                <a class="nav-item nav-link" th:href="@{/index}">Главная </a>
                 <a class="nav-item nav-link" th:href="@{/addItem}">Добавить задание</a>
                 <a class="nav-item nav-link" th:href="@{/items}">Все</a>
                 <a class="nav-item nav-link" th:href="@{/itemsCompleted}">Выполненные</a>
@@ -42,24 +42,20 @@
             <thead>
             <tr>
                 <th scope="col">Наименование задачи</th>
-
                 <th scope="col">Дата создания</th>
                 <th scope="col">Состояние</th>
             </tr>
             </thead>
             <tbody>
             <tr th:each="item: ${items}">
-
+                <td><a th:href="@{|/formEditItem/${item.id}|}"> <span th:text="${item.name}"/> </a></td>
+                <td th:text="${#dates.format(item.created, 'dd.MM.yyyy')}" />
                 <td>
-                    <a th:href="@{|/formUpdateItem/${item.id}|}">
-                        <i class="fa fa-edit"></i>
-                    </a>
-                    <span th:text="${item.name}"></span>
+                    <span th:if="${!item.done}"><span>В процессе</span></span>
+                    <span th:if="${item.done}"><span>Выполнено</span></span>
                 </td>
-
-                <td th:text="${item.created}" />
-                <td th:text="${item.done}" />
             </tr>
+            </a>
             </tbody>
         </table>
     </div>

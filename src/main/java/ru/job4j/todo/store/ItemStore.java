@@ -64,4 +64,12 @@ public class ItemStore {
         session.getTransaction().commit();
         session.close();
     }
+
+    public void deleted(Item item) {
+        Session session = sf.openSession();
+        session.beginTransaction();
+        session.delete(item);
+        session.getTransaction().commit();
+        session.close();
+    }
 }

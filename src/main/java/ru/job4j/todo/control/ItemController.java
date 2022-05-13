@@ -51,7 +51,7 @@ public class ItemController {
     }
 
     @PostMapping("/createItem")
-    public String createPost(@ModelAttribute Item item) {
+    public String createItem(@ModelAttribute Item item) {
         item.setCreated(new Date(System.currentTimeMillis()));
         itemService.create(item);
         return "redirect:/items";
@@ -70,6 +70,21 @@ public class ItemController {
         return "updateItem";
     }
 
+    @GetMapping("/formEditItem/{itemId}")
+    public String formEditItem(Model model, @PathVariable("itemId") int id) {
+        model.addAttribute("item", itemService.findById(id));
+        return "item";
+    }
 
+    @GetMapping("/doneItem/{itemId}")
+    public String doneItem(@PathVariable("itemId") int id) {
+        itemService.doneById(id);
+        return "redirect:/item" + id;
+    }
 
+    @GetMapping("/deleteItem/{itemId}")
+    public String deleteItem(@PathVariable("itemId") int id) {
+        itemService.deleteById(id);
+        return "redirect:/index";
+    }
 }

@@ -66,10 +66,15 @@ public class Item {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         Item item = (Item) o;
-        return id == item.id && done == item.done && Objects.equals(name, item.name) && Objects.equals(description, item.description) && Objects.equals(created, item.created);
+        return id == item.id && done == item.done && Objects.equals(name, item.name)
+                && Objects.equals(description, item.description) && Objects.equals(created, item.created);
     }
 
     @Override

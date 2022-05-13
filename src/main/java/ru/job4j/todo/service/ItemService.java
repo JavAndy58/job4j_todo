@@ -3,7 +3,6 @@ package ru.job4j.todo.service;
 import org.springframework.stereotype.Service;
 import ru.job4j.todo.model.Item;
 import ru.job4j.todo.store.ItemStore;
-
 import java.util.Collection;
 
 @Service
@@ -37,6 +36,17 @@ public class ItemService {
 
     public Item findById(int id) {
         return store.findById(id);
+    }
+
+    public void doneById(int id) {
+        Item item = findById(id);
+        item.setDone(true);
+        update(item);
+    }
+
+    public void deleteById(int id) {
+        Item item = findById(id);
+        store.deleted(item);
     }
 
 }
