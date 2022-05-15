@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import ru.job4j.todo.model.Item;
 import ru.job4j.todo.service.ItemService;
-import java.time.LocalDateTime;
 import java.util.Date;
 
 @Controller
@@ -79,7 +78,7 @@ public class ItemController {
     @GetMapping("/doneItem/{itemId}")
     public String doneItem(@PathVariable("itemId") int id) {
         itemService.doneById(id);
-        return "redirect:/item" + id;
+        return "redirect:/formEditItem/" + id;
     }
 
     @GetMapping("/deleteItem/{itemId}")
