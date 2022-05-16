@@ -31,6 +31,14 @@ public class ItemStore {
         session.close();
         return result;
     }
+
+    public void updateById(Integer idItem) {
+        Session session = sf.openSession();
+        session.beginTransaction();
+        session.createQuery("update Item set done = true where id =" +idItem).executeUpdate();
+        session.getTransaction().commit();
+        session.close();
+    }
     
     public List<Item> findCompleted() {
         Session session = sf.openSession();

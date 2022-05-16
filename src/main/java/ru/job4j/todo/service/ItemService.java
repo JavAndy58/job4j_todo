@@ -38,10 +38,8 @@ public class ItemService {
         return store.findById(id);
     }
 
-    public void doneById(int id) {
-        Item item = findById(id);
-        item.setDone(true);
-        update(item);
+    public void updateById(int id) {
+        store.updateById(id);
     }
 
     public void deleteById(int id) {

@@ -77,7 +77,7 @@ public class ItemController {
 
     @GetMapping("/doneItem/{itemId}")
     public String doneItem(@PathVariable("itemId") int id) {
-        itemService.doneById(id);
+        itemService.updateById(id);
         return "redirect:/formEditItem/" + id;
     }
 
