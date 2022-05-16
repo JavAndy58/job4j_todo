@@ -43,8 +43,7 @@ public class ItemService {
     }
 
     public void deleteById(int id) {
-        Item item = findById(id);
-        store.deleted(item);
+        store.deleteById(id);
     }
 
 }

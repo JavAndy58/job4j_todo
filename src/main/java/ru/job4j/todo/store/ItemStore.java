@@ -32,10 +32,22 @@ public class ItemStore {
         return result;
     }
 
-    public void updateById(Integer idItem) {
+    public void updateById(Integer id) {
         Session session = sf.openSession();
         session.beginTransaction();
-        session.createQuery("update Item set done = true where id =" +idItem).executeUpdate();
+        session.createQuery("update Item i set i.done = true where i.id = :fId")
+                        .setParameter("fId", id)
+                        .executeUpdate();
+        session.getTransaction().commit();
+        session.close();
+    }
+
+    public void deleteById(Integer id) {
+        Session session = sf.openSession();
+        session.beginTransaction();
+        session.createQuery("delete from Item where id = :fId")
+                .setParameter("fId", id)
+                .executeUpdate();
         session.getTransaction().commit();
         session.close();
     }
