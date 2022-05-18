@@ -1,15 +1,12 @@
 package ru.job4j.todo.store;
 
-import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 import org.springframework.stereotype.Repository;
 import ru.job4j.todo.model.Item;
 import java.util.List;
-import java.util.function.Function;
 
 @Repository
-public class ItemStore {
+public class ItemStore implements TransactionStore {
 
     private final SessionFactory sf;
 
@@ -19,13 +16,13 @@ public class ItemStore {
 
     public List<Item> findAll() {
         return this.tx(
-                session -> session.createQuery("from ru.job4j.todo.model.Item").list()
+                session -> session.createQuery("from ru.job4j.todo.model.Item").list(), sf
         );
     }
 
     public Item findById(Integer id) {
         return this.tx(
-                session -> session.get(Item.class, id)
+                session -> session.get(Item.class, id), sf
         );
     }
 
@@ -36,7 +33,7 @@ public class ItemStore {
                             .setParameter("fId", id)
                             .executeUpdate();
                     return new Object();
-                }
+                }, sf
         );
     }
 
@@ -47,19 +44,19 @@ public class ItemStore {
                             .setParameter("fId", id)
                             .executeUpdate();
                     return new Object();
-                }
+                }, sf
         );
     }
 
     public List<Item> findCompleted() {
         return this.tx(
-                session -> session.createQuery("from Item where done = true").list()
+                session -> session.createQuery("from Item where done = true").list(), sf
         );
     }
 
     public List<Item> findNew() {
         return this.tx(
-                session -> session.createQuery("from Item i order by i.created desc").list()
+                session -> session.createQuery("from Item i order by i.created desc").list(), sf
         );
     }
 
@@ -68,7 +65,7 @@ public class ItemStore {
                 session -> {
                     session.save(item);
                     return item;
-                }
+                }, sf
         );
     }
 
@@ -77,23 +74,7 @@ public class ItemStore {
                 session -> {
                     session.update(item);
                     return new Object();
-                }
+                }, sf
         );
-
-    }
-
-    private <T> T tx(final Function<Session, T> command) {
-        final Session session = sf.openSession();
-        final Transaction tx = session.beginTransaction();
-        try {
-            T rsl = command.apply(session);
-            tx.commit();
-            return rsl;
-        } catch (final Exception e) {
-            session.getTransaction().rollback();
-            throw e;
-        } finally {
-            session.close();
-        }
     }
 }

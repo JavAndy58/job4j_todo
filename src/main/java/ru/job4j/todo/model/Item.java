@@ -1,9 +1,6 @@
 package ru.job4j.todo.model;
 
 import javax.persistence.*;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.Objects;
 
@@ -21,15 +18,11 @@ public class Item {
     private Date created;
     private boolean done;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
     public Item() {
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getName() {
@@ -64,6 +57,22 @@ public class Item {
         this.done = done;
     }
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -73,12 +82,11 @@ public class Item {
             return false;
         }
         Item item = (Item) o;
-        return id == item.id && done == item.done && Objects.equals(name, item.name)
-                && Objects.equals(description, item.description) && Objects.equals(created, item.created);
+        return id == item.id && done == item.done && Objects.equals(name, item.name) && Objects.equals(description, item.description) && Objects.equals(created, item.created) && Objects.equals(user, item.user);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, description, created, done);
+        return Objects.hash(id, name, description, created, done, user);
     }
 }
