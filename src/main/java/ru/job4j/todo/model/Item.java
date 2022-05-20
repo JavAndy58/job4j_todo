@@ -89,4 +89,16 @@ public class Item {
     public int hashCode() {
         return Objects.hash(id, name, description, created, done, user);
     }
+
+    @Override
+    public String toString() {
+        return "Item{"
+                + "id=" + id
+                + ", name='" + name + '\''
+                + ", description='" + description + '\''
+                + ", created=" + created
+                + ", done=" + done
+                + ", user=" + user
+                + '}';
+    }
 }

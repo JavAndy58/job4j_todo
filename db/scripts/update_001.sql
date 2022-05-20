@@ -12,3 +12,4 @@ create table users (
     email varchar (2000),
     password varchar (2000)
 );
+ALTER TABLE users ADD CONSTRAINT email_unique UNIQUE (email);

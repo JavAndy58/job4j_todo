@@ -48,6 +48,7 @@
             <th scope="col">Наименование задачи</th>
             <th scope="col">Дата создания</th>
             <th scope="col">Состояние</th>
+            <th scope="col">Автор</th>
         </tr>
         </thead>
         <tbody>
@@ -58,6 +59,7 @@
                 <span th:if="${!item.done}"><span>В процессе</span></span>
                 <span th:if="${item.done}"><span>Выполнено</span></span>
             </td>
+
         </tr>
         </tbody>
     </table>
