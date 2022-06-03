@@ -32,7 +32,7 @@ public class UserController {
         }
         model.addAttribute("user", user);
         model.addAttribute("fail", fail != null);
-        return "login";
+        return "loginPage";
     }
 
     @PostMapping("/login")
@@ -44,6 +44,8 @@ public class UserController {
             model.addAttribute("message", "Пользователь с такой почтой уже существует");
             return "redirect:/loginPage?fail=true";
         }
+        HttpSession session = req.getSession();
+        session.setAttribute("user", userDb.get());
         return "redirect:/index";
     }
 
