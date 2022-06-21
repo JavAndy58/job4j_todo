@@ -7,7 +7,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import ru.job4j.todo.model.Item;
+import ru.job4j.todo.model.User;
 import ru.job4j.todo.service.ItemService;
+
+import javax.servlet.http.HttpSession;
 import java.util.Date;
 
 @Controller
@@ -20,8 +23,14 @@ public class ItemController {
     }
 
     @GetMapping("/index")
-    public String index(Model model) {
+    public String index(Model model, HttpSession session) {
+        User user = (User) session.getAttribute("user");
+        if (user == null) {
+            user = new User();
+            user.setEmail("Гость");
+        }
         model.addAttribute("items", itemService.findAll());
+        model.addAttribute("user", user);
         return "index";
     }
 
@@ -44,14 +53,20 @@ public class ItemController {
     }
 
     @GetMapping("/addItem")
-    public String formAddPost(Model model) {
-        model.addAttribute("item", new Item());
+    public String formAddPost(Model model, HttpSession session) {
+        User user = (User) session.getAttribute("user");
+        if (user == null) {
+            user = new User();
+            user.setEmail("Гость");
+        }
+        model.addAttribute("user", user);
         return "addItem";
     }
 
     @PostMapping("/createItem")
-    public String createItem(@ModelAttribute Item item) {
+    public String createItem(@ModelAttribute Item item, HttpSession session) {
         item.setCreated(new Date(System.currentTimeMillis()));
+        item.setUser((User) session.getAttribute("user"));
         itemService.create(item);
         return "redirect:/items";
     }
