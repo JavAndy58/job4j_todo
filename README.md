@@ -7,7 +7,7 @@
 - В проекте использоватся Spring boot, как основная библиотека.
 - Данные сохраняются через hibernate.
 
-![view](./img/index.png)
-![addTask](./img/addTask.png)
-![editTask](./img/editTask.png)
+![view](img/index.png)
+![addTask](img/addTask.png)
+![editTask](img/editTask.png)
 

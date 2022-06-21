@@ -34,12 +34,6 @@ public class ItemController {
         return "index";
     }
 
-    @GetMapping("/items")
-    public String items(Model model) {
-        model.addAttribute("items", itemService.findAll());
-        return "items";
-    }
-
     @GetMapping("/itemsCompleted")
     public String itemsCompleted(Model model) {
         model.addAttribute("itemsCompleted", itemService.findCompleted());

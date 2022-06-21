@@ -23,32 +23,6 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping("/loginPage")
-    public String loginPage(Model model, @RequestParam(name = "fale", required = false) Boolean fail, HttpSession session) {
-        User user = (User) session.getAttribute("user");
-        if (user == null) {
-            user = new User();
-            user.setEmail("Гость");
-        }
-        model.addAttribute("user", user);
-        model.addAttribute("fail", fail != null);
-        return "loginPage";
-    }
-
-    @PostMapping("/login")
-    public String login(Model model, @ModelAttribute User user, HttpServletRequest req) {
-        Optional<User> userDb = userService.findUserByEmailAndPwd(
-                user.getEmail(), user.getPassword()
-        );
-        if (userDb.isEmpty()) {
-            model.addAttribute("message", "Пользователь с такой почтой уже существует");
-            return "redirect:/loginPage?fail=true";
-        }
-        HttpSession session = req.getSession();
-        session.setAttribute("user", userDb.get());
-        return "redirect:/index";
-    }
-
     @GetMapping("/registrationPage")
     public String formRegistration(Model model,
                                    @RequestParam(name = "fail", required = false) Boolean fail,
@@ -71,6 +45,32 @@ public class UserController {
             return "redirect:/registrationPage?fail=true";
         }
         return "redirect:/loginPage";
+    }
+
+    @GetMapping("/loginPage")
+    public String formLogin(Model model,
+                            @RequestParam(name = "fail", required = false) Boolean fail,
+                            HttpSession session) {
+        User user = (User) session.getAttribute("user");
+        if (user == null) {
+            user = new User();
+            user.setEmail("Гость");
+        }
+        model.addAttribute("user", user);
+        model.addAttribute("fail", fail != null);
+        return "loginPage";
+    }
+
+    @PostMapping("/login")
+    public String login(Model model, @ModelAttribute User user, HttpServletRequest req) {
+        Optional<User> regUser = userService.findUserByEmailAndPwd(user.getEmail(), user.getPassword());
+        if (regUser.isEmpty()) {
+            model.addAttribute("message", "Пользователь с такой почтой уже существует");
+            return "redirect:/loginPage?fail=true";
+        }
+        HttpSession session = req.getSession();
+        session.setAttribute("user", regUser.get());
+        return "redirect:/index";
     }
 
     @GetMapping("/logout")
