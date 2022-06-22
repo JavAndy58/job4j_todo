@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import ru.job4j.todo.model.Item;
 import ru.job4j.todo.model.User;
 import ru.job4j.todo.service.ItemService;
-
 import javax.servlet.http.HttpSession;
 import java.util.Date;
 
@@ -35,15 +34,27 @@ public class ItemController {
     }
 
     @GetMapping("/itemsCompleted")
-    public String itemsCompleted(Model model) {
-        model.addAttribute("itemsCompleted", itemService.findCompleted());
-        return "itemsCompleted";
+    public String itemsCompleted(Model model, HttpSession session) {
+        User user = (User) session.getAttribute("user");
+        if (user == null) {
+            user = new User();
+            user.setEmail("Гость");
+        }
+        model.addAttribute("user", user);
+        model.addAttribute("items", itemService.findCompleted());
+        return "index";
     }
 
     @GetMapping("itemsNew")
-    public String itemsNew(Model model) {
-        model.addAttribute("itemsNew", itemService.findNew());
-        return "itemsNew";
+    public String itemsNew(Model model, HttpSession session) {
+        User user = (User) session.getAttribute("user");
+        if (user == null) {
+            user = new User();
+            user.setEmail("Гость");
+        }
+        model.addAttribute("user", user);
+        model.addAttribute("items", itemService.findNew());
+        return "index";
     }
 
     @GetMapping("/addItem")
@@ -62,24 +73,36 @@ public class ItemController {
         item.setCreated(new Date(System.currentTimeMillis()));
         item.setUser((User) session.getAttribute("user"));
         itemService.create(item);
-        return "redirect:/items";
+        return "redirect:/index";
     }
 
     @PostMapping("/updateItem")
     public String updateItem(@ModelAttribute Item item) {
         item.setCreated(new Date(System.currentTimeMillis()));
         itemService.update(item);
-        return "redirect:/items";
+        return "redirect:/index";
     }
 
     @GetMapping("/formUpdateItem/{itemId}")
-    public String formUpdateItem(Model model, @PathVariable("itemId") int id) {
+    public String formUpdateItem(Model model, @PathVariable("itemId") int id, HttpSession session) {
+        User user = (User) session.getAttribute("user");
+        if (user == null) {
+            user = new User();
+            user.setEmail("Гость");
+        }
+        model.addAttribute("user", user);
         model.addAttribute("item", itemService.findById(id));
         return "updateItem";
     }
 
     @GetMapping("/formEditItem/{itemId}")
-    public String formEditItem(Model model, @PathVariable("itemId") int id) {
+    public String formEditItem(Model model, @PathVariable("itemId") int id, HttpSession session) {
+        User user = (User) session.getAttribute("user");
+        if (user == null) {
+            user = new User();
+            user.setEmail("Гость");
+        }
+        model.addAttribute("user", user);
         model.addAttribute("item", itemService.findById(id));
         return "item";
     }
