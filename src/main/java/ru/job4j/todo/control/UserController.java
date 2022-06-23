@@ -27,11 +27,7 @@ public class UserController {
     public String formRegistration(Model model,
                                    @RequestParam(name = "fail", required = false) Boolean fail,
                                    HttpSession session) {
-        User user = (User) session.getAttribute("user");
-        if (user == null) {
-            user = new User();
-            user.setEmail("Гость");
-        }
+        User user = userCheck(session);
         model.addAttribute("user", user);
         model.addAttribute("fail", fail != null);
         return "registrationPage";
@@ -51,11 +47,7 @@ public class UserController {
     public String formLogin(Model model,
                             @RequestParam(name = "fail", required = false) Boolean fail,
                             HttpSession session) {
-        User user = (User) session.getAttribute("user");
-        if (user == null) {
-            user = new User();
-            user.setEmail("Гость");
-        }
+        User user = userCheck(session);
         model.addAttribute("user", user);
         model.addAttribute("fail", fail != null);
         return "loginPage";
@@ -77,5 +69,14 @@ public class UserController {
     public String logout(HttpSession session) {
         session.invalidate();
         return "redirect:/index";
+    }
+
+    private User userCheck(HttpSession session) {
+        User user = (User) session.getAttribute("user");
+        if (user == null) {
+            user = new User();
+            user.setEmail("Гость");
+        }
+        return user;
     }
 }

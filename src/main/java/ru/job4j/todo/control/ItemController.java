@@ -23,11 +23,7 @@ public class ItemController {
 
     @GetMapping("/index")
     public String index(Model model, HttpSession session) {
-        User user = (User) session.getAttribute("user");
-        if (user == null) {
-            user = new User();
-            user.setEmail("Гость");
-        }
+        User user = userCheck(session);
         model.addAttribute("items", itemService.findAll());
         model.addAttribute("user", user);
         return "index";
@@ -35,11 +31,7 @@ public class ItemController {
 
     @GetMapping("/itemsCompleted")
     public String itemsCompleted(Model model, HttpSession session) {
-        User user = (User) session.getAttribute("user");
-        if (user == null) {
-            user = new User();
-            user.setEmail("Гость");
-        }
+        User user = userCheck(session);
         model.addAttribute("user", user);
         model.addAttribute("items", itemService.findCompleted());
         return "index";
@@ -47,11 +39,7 @@ public class ItemController {
 
     @GetMapping("itemsNew")
     public String itemsNew(Model model, HttpSession session) {
-        User user = (User) session.getAttribute("user");
-        if (user == null) {
-            user = new User();
-            user.setEmail("Гость");
-        }
+        User user = userCheck(session);
         model.addAttribute("user", user);
         model.addAttribute("items", itemService.findNew());
         return "index";
@@ -59,11 +47,7 @@ public class ItemController {
 
     @GetMapping("/addItem")
     public String formAddPost(Model model, HttpSession session) {
-        User user = (User) session.getAttribute("user");
-        if (user == null) {
-            user = new User();
-            user.setEmail("Гость");
-        }
+        User user = userCheck(session);
         model.addAttribute("user", user);
         return "addItem";
     }
@@ -85,11 +69,7 @@ public class ItemController {
 
     @GetMapping("/formUpdateItem/{itemId}")
     public String formUpdateItem(Model model, @PathVariable("itemId") int id, HttpSession session) {
-        User user = (User) session.getAttribute("user");
-        if (user == null) {
-            user = new User();
-            user.setEmail("Гость");
-        }
+        User user = userCheck(session);
         model.addAttribute("user", user);
         model.addAttribute("item", itemService.findById(id));
         return "updateItem";
@@ -97,11 +77,7 @@ public class ItemController {
 
     @GetMapping("/formEditItem/{itemId}")
     public String formEditItem(Model model, @PathVariable("itemId") int id, HttpSession session) {
-        User user = (User) session.getAttribute("user");
-        if (user == null) {
-            user = new User();
-            user.setEmail("Гость");
-        }
+        User user = userCheck(session);
         model.addAttribute("user", user);
         model.addAttribute("item", itemService.findById(id));
         return "item";
@@ -117,5 +93,14 @@ public class ItemController {
     public String deleteItem(@PathVariable("itemId") int id) {
         itemService.deleteById(id);
         return "redirect:/index";
+    }
+
+    private User userCheck(HttpSession session) {
+        User user = (User) session.getAttribute("user");
+        if (user == null) {
+            user = new User();
+            user.setEmail("Гость");
+        }
+        return user;
     }
 }

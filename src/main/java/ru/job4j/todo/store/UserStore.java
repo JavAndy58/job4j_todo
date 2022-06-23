@@ -21,7 +21,7 @@ public class UserStore implements TransactionStore {
         } catch (Exception e) {
             return Optional.empty();
         }
-        return Optional.ofNullable(user);
+        return Optional.of(user);
     }
 
     public Optional<User> findByEmailAndPwd(String email, String password) {
