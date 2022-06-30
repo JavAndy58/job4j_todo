@@ -2,7 +2,9 @@ package ru.job4j.todo.model;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "items")
@@ -21,6 +23,9 @@ public class Item {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
+
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    private Set<Category> categories = new HashSet<>();
 
     public Item() {
     }
@@ -73,6 +78,10 @@ public class Item {
         this.id = id;
     }
 
+    public void addCategories(Category category) {
+        categories.add(category);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -82,7 +91,9 @@ public class Item {
             return false;
         }
         Item item = (Item) o;
-        return id == item.id && done == item.done && Objects.equals(name, item.name) && Objects.equals(description, item.description) && Objects.equals(created, item.created) && Objects.equals(user, item.user);
+        return id == item.id && done == item.done && Objects.equals(name, item.name)
+                && Objects.equals(description, item.description) && Objects.equals(created, item.created)
+                && Objects.equals(user, item.user);
     }
 
     @Override
