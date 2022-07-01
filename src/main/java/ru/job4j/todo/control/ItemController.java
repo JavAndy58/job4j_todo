@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import ru.job4j.todo.model.Item;
 import ru.job4j.todo.model.User;
+import ru.job4j.todo.service.CategoryService;
 import ru.job4j.todo.service.ItemService;
 import javax.servlet.http.HttpSession;
 import java.util.Date;
@@ -16,9 +17,11 @@ import java.util.Date;
 public class ItemController {
 
     private final ItemService itemService;
+    private final CategoryService categoryService;
 
-    public ItemController(ItemService itemService) {
+    public ItemController(ItemService itemService, CategoryService categoryService) {
         this.itemService = itemService;
+        this.categoryService = categoryService;
     }
 
     @GetMapping("/index")
@@ -49,6 +52,7 @@ public class ItemController {
     public String formAddPost(Model model, HttpSession session) {
         User user = userCheck(session);
         model.addAttribute("user", user);
+        model.addAttribute("categories", categoryService.getAll());
         return "addItem";
     }
 

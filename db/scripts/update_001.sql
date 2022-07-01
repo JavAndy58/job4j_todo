@@ -31,5 +31,3 @@ INSERT INTO categories(name) VALUES ('Работа');
 INSERT INTO categories(name) VALUES ('Семья');
 INSERT INTO categories(name) VALUES ('Образование');
 INSERT INTO categories(name) VALUES ('Личное');
-
-ALTER TABLE users ADD CONSTRAINT email_unique UNIQUE (email);
