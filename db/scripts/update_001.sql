@@ -1,4 +1,4 @@
-create table users
+create table if not exusers
 (
     id serial primary key,
     email varchar (2000),
@@ -18,16 +18,16 @@ create table items
 create table categories
 (
     id serial primary key,
-    name text
+    name varchar (2000)
 );
 
 create table items_categories
 (
     items_id serial primary key,
     categories_id serial primary key
-)
+);
 
-INSERT INTO categories(name) VALUES ('Работа');
-INSERT INTO categories(name) VALUES ('Семья');
-INSERT INTO categories(name) VALUES ('Образование');
-INSERT INTO categories(name) VALUES ('Личное');
+INSERT INTO categories (name) VALUES ('Работа');
+INSERT INTO categories (name) VALUES ('Семья');
+INSERT INTO categories (name) VALUES ('Образование');
+INSERT INTO categories (name) VALUES ('Личное');
