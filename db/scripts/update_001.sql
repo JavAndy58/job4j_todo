@@ -1,30 +1,24 @@
-create table if not exusers
+CREATE TABLE IF NOT EXISTS users
 (
-    id serial primary key,
-    email varchar (2000),
-    password varchar (2000)
+  id SERIAL PRIMARY KEY,
+  email VARCHAR NOT NULL,
+  password TEXT NOT NULL
 );
 
-create table items
+CREATE TABLE IF NOT EXISTS items
 (
-    id serial primary key,
-    name text,
-    description text,
-    created timestamp,
-    done boolean,
-    user_id int not null references users(id)
+    id SERIAL PRIMARY KEY,
+    name TEXT,
+    description TEXT,
+    created TIMESTAMP,
+    done BOOLEAN,
+    user_id INT NOT NULL REFERENCES users(id)
 );
 
-create table categories
+CREATE TABLE IF NOT EXISTS categories
 (
-    id serial primary key,
-    name varchar (2000)
-);
-
-create table items_categories
-(
-    items_id serial primary key,
-    categories_id serial primary key
+    id SERIAL PRIMARY KEY,
+    name TEXT
 );
 
 INSERT INTO categories (name) VALUES ('Работа');
