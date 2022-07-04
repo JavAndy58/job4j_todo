@@ -2,6 +2,7 @@ package ru.job4j.todo.store;
 
 import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Repository;
+import ru.job4j.todo.model.Category;
 import ru.job4j.todo.model.Item;
 import java.util.List;
 
@@ -60,13 +61,17 @@ public class ItemStore implements TransactionStore {
         );
     }
 
-    public Item create(Item item) {
-        return this.tx(
+    public Item create(Item item, List<String> idsCat) {
+
+        this.tx(
                 session -> {
-                    session.save(item);
-                    return item;
-                }, sf
-        );
+                    for (String id : idsCat) {
+                        Category category = session.find(Category.class, Integer.parseInt(id));
+                        item.addCategories(category);
+                    }
+                    return session.save(item);
+                }, sf);
+        return item;
     }
 
     public void update(Item item) {

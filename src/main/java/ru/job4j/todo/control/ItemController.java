@@ -2,16 +2,14 @@ package ru.job4j.todo.control;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import ru.job4j.todo.model.Item;
 import ru.job4j.todo.model.User;
 import ru.job4j.todo.service.CategoryService;
 import ru.job4j.todo.service.ItemService;
 import javax.servlet.http.HttpSession;
 import java.util.Date;
+import java.util.List;
 
 @Controller
 public class ItemController {
@@ -57,10 +55,11 @@ public class ItemController {
     }
 
     @PostMapping("/createItem")
-    public String createItem(@ModelAttribute Item item, HttpSession session) {
+    public String createItem(@ModelAttribute Item item, HttpSession session,
+                             @RequestParam(name = "catIds") List<String> idsCat) {
         item.setCreated(new Date(System.currentTimeMillis()));
         item.setUser((User) session.getAttribute("user"));
-        itemService.create(item);
+        itemService.create(item, idsCat);
         return "redirect:/index";
     }
 

@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import ru.job4j.todo.model.Item;
 import ru.job4j.todo.store.ItemStore;
 import java.util.Collection;
+import java.util.List;
 
 @Service
 public class ItemService {
@@ -26,8 +27,8 @@ public class ItemService {
         return store.findNew();
     }
 
-    public void create(Item item) {
-        store.create(item);
+    public void create(Item item, List<String> idsCat) {
+        store.create(item, idsCat);
     }
 
     public void update(Item item) {
