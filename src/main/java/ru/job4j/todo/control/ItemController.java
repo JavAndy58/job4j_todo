@@ -57,8 +57,8 @@ public class ItemController {
     @PostMapping("/createItem")
     public String createItem(@ModelAttribute Item item, HttpSession session,
                              @RequestParam(name = "catIds") List<String> idsCat) {
-        item.setCreated(new Date(System.currentTimeMillis()));
         item.setUser((User) session.getAttribute("user"));
+        item.setCreated(new Date(System.currentTimeMillis()));
         itemService.create(item, idsCat);
         return "redirect:/index";
     }
